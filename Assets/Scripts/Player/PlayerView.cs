@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TextMeshProUGUI _textPoints;
+    [SerializeField] private TextMeshProUGUI _textDistance;
+
+    public void SetPoints(int points)
     {
-        
+        _textPoints.text = "Points: " + points;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetDistance(float distance)
     {
-        
+        _textDistance.text = "Distance: " + distance;
     }
 }

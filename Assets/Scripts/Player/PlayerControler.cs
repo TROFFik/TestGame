@@ -10,6 +10,7 @@ public class PlayerControler : MonoBehaviour
     private PlayerView _playerView;
 
     private Vector3 _target—oordinates;
+    private Vector3 lastPotition;
     private void Start()
     {
         GetPlayerComponents();
@@ -22,13 +23,22 @@ public class PlayerControler : MonoBehaviour
             Input—alculations();
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, _target—oordinates, _playerModel.Speed);
+        float distance = Vector3.Distance(transform.position, _target—oordinates);
+        if (distance > 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _target—oordinates, _playerModel.Speed);
+
+            distance = Vector3.Distance(transform.position, lastPotition);
+            lastPotition = transform.position;
+            _playerModel.Distance = Mathf.Abs(distance);
+            _playerView.SetDistance(_playerModel.Distance);
+        }
     }
 
     public void GetPoints()
     {
         _playerModel.Points = 1;
-        Debug.Log(_playerModel.Points);
+        _playerView.SetPoints(_playerModel.Points);
     }
 
     private void GetPlayerComponents()
@@ -36,6 +46,8 @@ public class PlayerControler : MonoBehaviour
         _playerModel = new PlayerModel();
         _playerView = GetComponent<PlayerView>();
 
+        _playerView.SetPoints(_playerModel.Points);
+        _playerView.SetDistance(_playerModel.Distance);
         _playerModel.Speed = _speed;
     }
 

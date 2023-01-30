@@ -30,7 +30,6 @@ public class ItemPlacer : MonoBehaviour
         _current—ountItemsOnLevel--;
         if (!_itemIsBeingPlacedNow)
         {
-            Debug.Log(1);
             PlaceTimer();
         }
     }
