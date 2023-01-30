@@ -15,8 +15,8 @@ public class LevelManager : MonoBehaviour
     [Tooltip("Time that should elapse between item generations (in seconds)")]
     [SerializeField] private int _itemGenerationTime;
 
-    [Tooltip("Item to be spawned on level")]
-    [SerializeField] private Item _itemPrefab;
+    [Tooltip("Items object pool for this level")]
+    [SerializeField] private Pool _pool;
 
     private PlaneCreator _planeCreator;
     private ItemPlacer _itemPlacer;
@@ -36,6 +36,6 @@ public class LevelManager : MonoBehaviour
     private void CreateLevel()
     {
         _planeCreator.StartCreate(_levelXSize, _levelYSize);
-        _itemPlacer.StartPlace(_levelXSize, _levelYSize, _countItemsOnLevel, _itemGenerationTime, _itemPrefab);
+        _itemPlacer.StartPlace(_levelXSize, _levelYSize, _countItemsOnLevel, _itemGenerationTime, _pool);
     }
 }
