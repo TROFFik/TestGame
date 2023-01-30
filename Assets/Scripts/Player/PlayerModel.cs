@@ -20,4 +20,16 @@ public class PlayerModel
         get { return _points; }
         set { _points += value; }
     }
+
+    public void LoadData()
+    {
+        _distance = MemoryController.LoadData("Distance");
+        _points = (int)MemoryController.LoadData("Points");
+    }
+
+    public void SaveData()
+    {
+        MemoryController.SaveData("Distance", _distance);
+        MemoryController.SaveData("Points", _points);
+    }
 }

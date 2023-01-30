@@ -46,14 +46,15 @@ public class PlayerControler : MonoBehaviour
         _playerModel = new PlayerModel();
         _playerView = GetComponent<PlayerView>();
 
+        _playerModel.Speed = _speed;
+
+        _playerModel.LoadData();
         _playerView.SetPoints(_playerModel.Points);
         _playerView.SetDistance(_playerModel.Distance);
-        _playerModel.Speed = _speed;
     }
 
     private void Input—alculations()
     {
-        
         Touch touch = Input.GetTouch(0);
         Ray ray = Camera.main.ScreenPointToRay(touch.position);
         RaycastHit hit;
@@ -68,5 +69,10 @@ public class PlayerControler : MonoBehaviour
             else
             _target—oordinates = new Vector3(hit.point.x, 0, hit.point.z);
         }
+    }
+
+    private void OnDisable()
+    {
+        _playerModel.SaveData();
     }
 }
