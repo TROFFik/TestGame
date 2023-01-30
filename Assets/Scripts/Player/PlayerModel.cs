@@ -1,12 +1,12 @@
 public class PlayerModel
 {
-    private float _speed;
+    private float _maxSpeed;
     private float _distance;
     private int _points;
-    public float Speed
+    public float MaxSpeed
     {
-        get { return _speed; }
-        set { _speed = value; }
+        get { return _maxSpeed; }
+        set { _maxSpeed = value; }
     }
 
     public float Distance

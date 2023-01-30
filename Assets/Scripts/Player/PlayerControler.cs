@@ -4,13 +4,16 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
     [Tooltip("Player move speed")]
-    [SerializeField] private float _speed; 
+    [SerializeField] private float _maxSpeed;
+
+    private float _allDistance;
 
     private PlayerModel _playerModel;
     private PlayerView _playerView;
 
     private Vector3 _target—oordinates;
-    private Vector3 lastPotition;
+    private Vector3 _lastPotition;
+    private Vector3 _startPoint;
     private void Start()
     {
         GetPlayerComponents();
@@ -23,16 +26,7 @@ public class PlayerControler : MonoBehaviour
             Input—alculations();
         }
 
-        float distance = Vector3.Distance(transform.position, _target—oordinates);
-        if (distance > 0)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, _target—oordinates, _playerModel.Speed);
-
-            distance = Vector3.Distance(transform.position, lastPotition);
-            lastPotition = transform.position;
-            _playerModel.Distance = Mathf.Abs(distance);
-            _playerView.SetDistance(_playerModel.Distance);
-        }
+        Move—alculations();
     }
 
     public void GetPoints()
@@ -46,7 +40,7 @@ public class PlayerControler : MonoBehaviour
         _playerModel = new PlayerModel();
         _playerView = GetComponent<PlayerView>();
 
-        _playerModel.Speed = _speed;
+        _playerModel.MaxSpeed = _maxSpeed;
 
         _playerModel.LoadData();
         _playerView.SetPoints(_playerModel.Points);
@@ -67,7 +61,31 @@ public class PlayerControler : MonoBehaviour
                 _target—oordinates = transform.position;
             }
             else
-            _target—oordinates = new Vector3(hit.point.x, 0, hit.point.z);
+            {
+                _target—oordinates = new Vector3(hit.point.x, 0, hit.point.z);
+
+                _startPoint = transform.position;
+                _allDistance = Vector3.Distance(_startPoint, _target—oordinates);
+            }   
+        }
+    }
+
+    private void Move—alculations()
+    {
+        float distance = Vector3.Distance(transform.position, _target—oordinates);
+
+        if (distance > 0)
+        {
+            float distanceCoefficient = Vector3.Distance(transform.position, _startPoint) / _allDistance;
+            distanceCoefficient = Mathf.Clamp(distanceCoefficient, 0.01f, 0.99f);
+            float speed = _playerModel.MaxSpeed * Mathf.Sin(distanceCoefficient * Mathf.PI);
+
+            transform.position = Vector3.MoveTowards(transform.position, _target—oordinates, speed);
+
+            distance = Vector3.Distance(transform.position, _lastPotition);
+            _lastPotition = transform.position;
+            _playerModel.Distance = distance;
+            _playerView.SetDistance(_playerModel.Distance);
         }
     }
 
