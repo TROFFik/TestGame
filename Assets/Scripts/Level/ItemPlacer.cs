@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
@@ -14,9 +12,9 @@ public class ItemPlacer : MonoBehaviour
     private bool _itemIsBeingPlacedNow = false;
     private bool _canPlaceItem = false;
 
-    private GameObject _itemPrefab;
+    private Item _itemPrefab;
 
-    public void StartPlace(int xSize, int ySize, int countItemsOnLevel, int itemGenerationTime, GameObject itemPrefab)
+    public void StartPlace(int xSize, int ySize, int countItemsOnLevel, int itemGenerationTime, Item itemPrefab)
     {
         _xSize = xSize;
         _ySize = ySize;
@@ -27,12 +25,23 @@ public class ItemPlacer : MonoBehaviour
 
         PlaceTimer();
     }
+    public void MissingItemOnMap()
+    {
+        _current—ountItemsOnLevel--;
+        if (!_itemIsBeingPlacedNow)
+        {
+            Debug.Log(1);
+            PlaceTimer();
+        }
+    }
 
     private void PlaceNewItem()
     {
         var tempItem = Instantiate(_itemPrefab);
         Vector3 tempItemCoordinates = new Vector3(Random.Range(0, _xSize), 0, Random.Range(0, _ySize));
 
+        tempItem.transform.SetParent(transform);
+        tempItem.GetComponent<Item>().ParentItemPlacer = this;
         tempItem.transform.localPosition = tempItemCoordinates;
 
         _current—ountItemsOnLevel++;

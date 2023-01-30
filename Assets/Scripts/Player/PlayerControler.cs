@@ -25,6 +25,12 @@ public class PlayerControler : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _target—oordinates, _playerModel.Speed);
     }
 
+    public void GetPoints()
+    {
+        _playerModel.Points = 1;
+        Debug.Log(_playerModel.Points);
+    }
+
     private void GetPlayerComponents()
     {
         _playerModel = new PlayerModel();

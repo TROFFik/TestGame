@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int _itemGenerationTime;
 
     [Tooltip("Item to be spawned on level")]
-    [SerializeField] private GameObject _itemPrefab;
+    [SerializeField] private Item _itemPrefab;
 
     private PlaneCreator _planeCreator;
     private ItemPlacer _itemPlacer;
