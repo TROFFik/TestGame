@@ -9,6 +9,15 @@ public class LevelManager : MonoBehaviour
     [Tooltip("Y size of generated surface and place of spawning items")]
     [SerializeField] private int _levelYSize;
 
+    [Tooltip("The number of items that will be on level")]
+    [SerializeField] private int _countItemsOnLevel;
+
+    [Tooltip("Time that should elapse between item generations (in seconds)")]
+    [SerializeField] private int _itemGenerationTime;
+
+    [Tooltip("Item to be spawned on level")]
+    [SerializeField] private GameObject _itemPrefab;
+
     private PlaneCreator _planeCreator;
     private ItemPlacer _itemPlacer;
 
@@ -27,5 +36,6 @@ public class LevelManager : MonoBehaviour
     private void CreateLevel()
     {
         _planeCreator.StartCreate(_levelXSize, _levelYSize);
+        _itemPlacer.StartPlace(_levelXSize, _levelYSize, _countItemsOnLevel, _itemGenerationTime, _itemPrefab);
     }
 }
